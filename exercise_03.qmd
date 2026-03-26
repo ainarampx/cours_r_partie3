@@ -140,3 +140,31 @@ calcul_distribution_semaine(df_d_2602)
 ```
 Pour les data.frames construits à partir d’une boucle, on s’attend à obtenir une distribution sur plusieurs jours de la semaine. En revanche, pour les data.frames construits à partir d’une date unique, un seul jour de la semaine est attendu.
 
+## Question 9
+
+```{r}
+library(ggplot2)
+
+plot_distribution_semaine <- function(df) {
+  df_filtre <- filtre_anomalie(df)
+  dist_semaine <- calcul_distribution_semaine(df_filtre)
+  
+  ggplot(dist_semaine, aes(x = Jour.de.la.semaine, y = total_trajets)) +
+    geom_col() +
+    labs(
+      x = "Jour de la semaine",
+      y = "Nombre de trajets",
+      title = "Distribution des trajets par jour de la semaine"
+    ) +
+    theme_minimal()
+}
+
+plot_distribution_semaine(df_b_788)
+plot_distribution_semaine(df_b_665)
+plot_distribution_semaine(df_d_0409)
+plot_distribution_semaine(df_d_2602)
+```
+La fonction combine les deux étapes précédentes : elle filtre d’abord les anomalies, puis elle calcule la distribution hebdomadaire avant de la représenter sous forme de diagramme en colonnes. Pour une date unique, le graphique ne comporte en général qu’une seule barre.
+
+
+
