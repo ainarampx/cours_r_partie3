@@ -123,3 +123,20 @@ filtre_anomalie <- function(df, retour_max = FALSE) {
 
 ```
 
+## Question 8
+```{r}
+library(dplyr)
+
+calcul_distribution_semaine <- function(df) {
+  df |>
+    group_by(Jour.de.la.semaine) |>
+    summarise(total_trajets = sum(Total, na.rm = TRUE))
+}
+
+calcul_distribution_semaine(df_b_788)
+calcul_distribution_semaine(df_b_665)
+calcul_distribution_semaine(df_d_0409)
+calcul_distribution_semaine(df_d_2602)
+```
+Pour les data.frames construits à partir d’une boucle, on s’attend à obtenir une distribution sur plusieurs jours de la semaine. En revanche, pour les data.frames construits à partir d’une date unique, un seul jour de la semaine est attendu.
+
