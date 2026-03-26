@@ -18,7 +18,7 @@ df_velo <- read.csv("data/244400404_comptages-velo-nantes-metropole.csv", sep = 
 Création des 2 data frames
 ```{r}
 df_b_788 <- df_velo[df_velo$Numéro.de.boucle == 788, ]
-df_b_457 <- df_velo[df_velo$Numéro.de.boucle == 457, ]
+df_b_665 <- df_velo[df_velo$Numéro.de.boucle == 665, ]
 ```
 
 
@@ -28,12 +28,12 @@ unique(df_velo$Jour)[1:10] #voir le fromat des jours
 ```
 
 ```{r}
-df_d_0409 <- df_velo[df_velo$Jour == "04/09/2024", ]
-df_d_2602 <- df_velo[df_velo$Jour == "26/02/2024", ]
+df_d_0409 <- df_velo[df_velo$Jour == "2025-09-04", ]
+df_d_2602 <- df_velo[df_velo$Jour == "2025-02-26", ]
 ```
 
 
-## Exercise 3
+## Question 3
 
 ```{r}
 filtre_anomalie <- function(df) {
@@ -42,14 +42,28 @@ filtre_anomalie <- function(df) {
 }
 
 df_b_788_filtre <- filtre_anomalie(df_b_788)
-df_b_457_filtre <- filtre_anomalie(df_b_457)
+df_b_665_filtre <- filtre_anomalie(df_b_665)
 
 df_d_0409_filtre <- filtre_anomalie(df_d_0409)
 df_d_2602_filtre <- filtre_anomalie(df_d_2602)
 
 nrow(df_b_788) - nrow(df_b_788_filtre)
-nrow(df_b_457) - nrow(df_b_457_filtre)
+nrow(df_b_665) - nrow(df_b_665_filtre)
 nrow(df_d_0409) - nrow(df_d_0409_filtre)
 nrow(df_d_2602) - nrow(df_d_2602_filtre)
 ```
-La fonction filtre_anomalie() supprime les lignes pour lesquelles la probabilité de présence d’anomalies est Forte ou Faible. On l’applique ensuite aux sous-ensembles créés à la question 2, puis on compare le nombre de lignes avant et après filtrage. On a supprimé 4 lignes en total.
+La fonction filtre_anomalie() supprime les lignes pour lesquelles la probabilité de présence d’anomalies est Forte ou Faible. On l’applique ensuite aux sous-ensembles créés à la question 2, puis on compare le nombre de lignes avant et après filtrage. On a supprimé 30 lignes en total.
+
+## Question 4
+
+```{r}
+compter_nombre_trajets <- function(df) {
+  sum(df$Total, na.rm = TRUE)
+}
+
+compter_nombre_trajets(df_b_788)
+compter_nombre_trajets(df_b_665)
+compter_nombre_trajets(df_d_0409)
+compter_nombre_trajets(df_d_2602)
+```
+calcule la somme de la variable Total. Elle permet donc d’obtenir le nombre total de trajets enregistrés dans chaque sous-ensemble.
