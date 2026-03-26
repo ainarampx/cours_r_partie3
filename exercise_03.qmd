@@ -4,23 +4,31 @@ format: html
 editor: visual
 ---
 
-## Quarto
+## premier push
+Le push a permis d’envoyer le dépôt local vers GitHub pour la première fois.
+Le dépôt distant, initialement vide, contient maintenant les fichiers versionnés et l’historique du premier commit.
+Le fichier .csv, exclu du commit, n’a pas été envoyé sur GitHub.
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
+## Question 2
+Imporation des données
 ```{r}
-1 + 1
+df_velo <- read.csv("data/244400404_comptages-velo-nantes-metropole.csv", sep = ";")
 ```
 
-You can add options to executable code like this
-
+Création des 2 data frames
 ```{r}
-#| echo: false
-2 * 2
+df_b_788 <- df_velo[df_velo$Numéro.de.boucle == 788, ]
+df_b_457 <- df_velo[df_velo$Numéro.de.boucle == 457, ]
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+Jours favoris
+```{r}
+unique(df_velo$Jour)[1:10] #voir le fromat des jours 
+```
+
+```{r}
+df_d_0409 <- df_velo[df_velo$Jour == "04/09/2024", ]
+df_d_2602 <- df_velo[df_velo$Jour == "26/02/2024", ]
+```
+
