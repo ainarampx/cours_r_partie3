@@ -82,3 +82,22 @@ compter_nombre_boucle(df_d_2602)
 ```
 On peut prévoir que df_b_788 et df_b_457 contiennent une seule boucle, car ils ont été construits à partir d’un filtre sur un numéro de boucle unique. En revanche, les data.frames construits à partir d’un jour peuvent contenir plusieurs boucles.
 
+## Question 6
+```{r}
+trouver_trajet_max <- function(df) {
+  i <- which.max(df$Total)
+  
+  list(
+    boucle = df$Boucle.de.comptage[i],
+    jour = df$Jour[i],
+    nombre_passages = df$Total[i]
+  )
+}
+
+trouver_trajet_max(df_b_788)
+trouver_trajet_max(df_b_665)
+trouver_trajet_max(df_d_0409)
+trouver_trajet_max(df_d_2602)
+```
+
+cette fonction repère la ligne pour laquelle la variable Total est maximale. Elle retourne ensuite les informations associées à cette ligne : la boucle, le jour et le nombre de passages.
