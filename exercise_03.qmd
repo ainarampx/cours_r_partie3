@@ -101,3 +101,25 @@ trouver_trajet_max(df_d_2602)
 ```
 
 cette fonction repère la ligne pour laquelle la variable Total est maximale. Elle retourne ensuite les informations associées à cette ligne : la boucle, le jour et le nombre de passages.
+
+## Question 7
+```{r}
+trouver_trajet_max(df_velo)
+```
+Appliquée au jeu de données complet, la fonction peut renvoyer une observation anormalement élevée. Le maximum brut n’est donc pas forcément représentatif d’une situation normale. Il est plus pertinent de filtrer les anomalies avant de chercher le trajet maximal.
+
+```{r}
+filtre_anomalie <- function(df, retour_max = FALSE) {
+  df_filtre <- df[df$Probabilité.de.présence.d.anomalies != "Forte" &
+                    df$Probabilité.de.présence.d.anomalies != "Faible", ]
+  
+  if (retour_max == FALSE) {
+    return(df_filtre)
+  } else {
+    i <- which.max(df_filtre$Total)
+    return(df_filtre[i, ])
+  }
+}
+
+```
+
