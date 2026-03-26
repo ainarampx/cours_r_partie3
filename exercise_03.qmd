@@ -167,4 +167,40 @@ plot_distribution_semaine(df_d_2602)
 La fonction combine les deux étapes précédentes : elle filtre d’abord les anomalies, puis elle calcule la distribution hebdomadaire avant de la représenter sous forme de diagramme en colonnes. Pour une date unique, le graphique ne comporte en général qu’une seule barre.
 
 
+## Question 10 
+```{r}
+trouver_trajet_max2 <- function(df) {
+  df_filtre <- filtre_anomalie(df)
+  
+  i <- which.max(df_filtre$Total)
+  
+  boucle_max <- df_filtre$Boucle.de.comptage[i]
+  jour_max <- df_filtre$Jour[i]
+  total_max <- df_filtre$Total[i]
+  
+  moyenne_boucle <- mean(
+    df_filtre$Total[df_filtre$Boucle.de.comptage == boucle_max],
+    na.rm = TRUE
+  )
+  
+  moyenne_jour <- mean(
+    df_filtre$Total[df_filtre$Jour == jour_max],
+    na.rm = TRUE
+  )
+  
+  list(
+    boucle = boucle_max,
+    jour = jour_max,
+    nombre_passages = total_max,
+    moyenne_par_jour_sur_cette_boucle = moyenne_boucle,
+    moyenne_par_boucle_pour_cette_date = moyenne_jour
+  )
+}
 
+trouver_trajet_max2(df_b_788)
+trouver_trajet_max2(df_b_665)
+trouver_trajet_max2(df_d_0409)
+trouver_trajet_max2(df_d_2602)
+trouver_trajet_max2(df_velo)
+```
+La fonction améliorée commence par supprimer les anomalies, puis identifie le maximum des passages. Elle renvoie également deux indicateurs complémentaires : la moyenne des passages pour la boucle concernée et la moyenne des passages pour la date concernée. Cela permet de mieux situer le maximum observé par rapport au comportement moyen.
