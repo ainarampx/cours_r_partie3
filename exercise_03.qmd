@@ -32,3 +32,24 @@ df_d_0409 <- df_velo[df_velo$Jour == "04/09/2024", ]
 df_d_2602 <- df_velo[df_velo$Jour == "26/02/2024", ]
 ```
 
+
+## Exercise 3
+
+```{r}
+filtre_anomalie <- function(df) {
+  df[df$Probabilité.de.présence.d.anomalies != "Forte" &
+       df$Probabilité.de.présence.d.anomalies != "Faible", ]
+}
+
+df_b_788_filtre <- filtre_anomalie(df_b_788)
+df_b_457_filtre <- filtre_anomalie(df_b_457)
+
+df_d_0409_filtre <- filtre_anomalie(df_d_0409)
+df_d_2602_filtre <- filtre_anomalie(df_d_2602)
+
+nrow(df_b_788) - nrow(df_b_788_filtre)
+nrow(df_b_457) - nrow(df_b_457_filtre)
+nrow(df_d_0409) - nrow(df_d_0409_filtre)
+nrow(df_d_2602) - nrow(df_d_2602_filtre)
+```
+La fonction filtre_anomalie() supprime les lignes pour lesquelles la probabilité de présence d’anomalies est Forte ou Faible. On l’applique ensuite aux sous-ensembles créés à la question 2, puis on compare le nombre de lignes avant et après filtrage. On a supprimé 4 lignes en total.
