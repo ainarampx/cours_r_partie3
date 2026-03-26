@@ -67,3 +67,18 @@ compter_nombre_trajets(df_d_0409)
 compter_nombre_trajets(df_d_2602)
 ```
 calcule la somme de la variable Total. Elle permet donc d’obtenir le nombre total de trajets enregistrés dans chaque sous-ensemble.
+
+## Question 5
+
+```{r}
+compter_nombre_boucle <- function(df) {
+  length(unique(df$Numéro.de.boucle))
+}
+
+compter_nombre_boucle(df_b_788)
+compter_nombre_boucle(df_b_665)
+compter_nombre_boucle(df_d_0409)
+compter_nombre_boucle(df_d_2602)
+```
+On peut prévoir que df_b_788 et df_b_457 contiennent une seule boucle, car ils ont été construits à partir d’un filtre sur un numéro de boucle unique. En revanche, les data.frames construits à partir d’un jour peuvent contenir plusieurs boucles.
+
