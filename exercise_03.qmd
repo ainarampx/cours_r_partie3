@@ -10,7 +10,7 @@ Le dépôt distant, initialement vide, contient maintenant les fichiers versionn
 Le fichier .csv, exclu du commit, n’a pas été envoyé sur GitHub.
 
 ## Question 2
-Imporation des données
+Importation des données (utiliser readr)
 ```{r}
 df_velo <- read.csv("data/244400404_comptages-velo-nantes-metropole.csv", sep = ";")
 ```
@@ -36,9 +36,12 @@ df_d_2602 <- df_velo[df_velo$Jour == "2025-02-26", ]
 ## Question 3
 
 ```{r}
+
+library(dplyr)
 filtre_anomalie <- function(df) {
-  df[df$Probabilité.de.présence.d.anomalies != "Forte" &
-       df$Probabilité.de.présence.d.anomalies != "Faible", ]
+  df|>
+    filter(!`Probabilité.de.présence.d.anomalies` %in% c("Forte", "Faible"))
+  
 }
 
 df_b_788_filtre <- filtre_anomalie(df_b_788)
@@ -67,6 +70,12 @@ compter_nombre_trajets(df_d_0409)
 compter_nombre_trajets(df_d_2602)
 ```
 calcule la somme de la variable Total. Elle permet donc d’obtenir le nombre total de trajets enregistrés dans chaque sous-ensemble.
+
+```{r}
+library(stats)
+quantile(df_velo$Total)
+```
+
 
 ## Question 5
 
@@ -109,18 +118,20 @@ trouver_trajet_max(df_velo)
 Appliquée au jeu de données complet, la fonction peut renvoyer une observation anormalement élevée. Le maximum brut n’est donc pas forcément représentatif d’une situation normale. Il est plus pertinent de filtrer les anomalies avant de chercher le trajet maximal.
 
 ```{r}
-filtre_anomalie <- function(df, retour_max = FALSE) {
-  df_filtre <- df[df$Probabilité.de.présence.d.anomalies != "Forte" &
-                    df$Probabilité.de.présence.d.anomalies != "Faible", ]
-  
-  if (retour_max == FALSE) {
-    return(df_filtre)
-  } else {
-    i <- which.max(df_filtre$Total)
-    return(df_filtre[i, ])
-  }
+filtre_anomalie <- function(df) {
+  dplyr::filter(df,
+    Probabilité.de.présence.d.anomalies != "Forte" &
+    Probabilité.de.présence.d.anomalies != "Faible" &
+    Total < 100000
+  )
 }
 
+
+```
+
+
+```{r}
+filtre_anomalie(df_velo) |>trouver_trajet_max()
 ```
 
 ## Question 8
